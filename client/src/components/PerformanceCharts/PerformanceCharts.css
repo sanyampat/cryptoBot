@@ -1,0 +1,56 @@
+.charts-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media screen and (min-width: 1024px) {
+  .charts-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.chart-card {
+  background-color: #1f2937; /* bg-gray-900 */
+  border: 1px solid #374151; /* border-gray-800 */
+  color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card-header {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 16px;
+  border-bottom: 1px solid #374151;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.tax-legend {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legend-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.legend-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+

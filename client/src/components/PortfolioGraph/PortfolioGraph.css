@@ -1,0 +1,122 @@
+.portfolio-card {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.portfolio-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.subdued {
+  font-size: 14px;
+  color: #9ca3af;
+  font-weight: normal;
+}
+
+.portfolio-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media screen and (min-width: 1024px) {
+  .portfolio-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat-box {
+  background-color: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.stat-change {
+  font-size: 12px;
+}
+
+.stat-change.positive {
+  color: #4ade80;
+}
+
+.stat-change.negative {
+  color: #f87171;
+}
+
+.portfolio-chart-container {
+  background-color: #2d3748;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.performance-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .performance-metrics {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .performance-metrics {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.metric-label {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 4px;
+}
+
+.metric-value {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.legend-container {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  font-size: 14px;
+  color: #d1d5db;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}

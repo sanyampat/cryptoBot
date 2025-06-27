@@ -1,0 +1,75 @@
+.email-card {
+  background-color: #111827;
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 700px;
+  margin: 20px auto;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.email-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.email-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.email-entry {
+  background-color: #1f2937;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.email-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.subject {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.timestamp {
+  font-size: 0.85rem;
+  color: #a1a1aa;
+}
+
+.trades {
+  font-size: 0.85rem;
+  color: #d1d5db;
+}
+
+.toggle-button {
+  background-color: #374151;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.toggle-button:hover {
+  background-color: #4b5563;
+}
+
+.email-body {
+  background-color: #000;
+  padding: 12px;
+  border: 1px solid #374151;
+  margin-top: 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #d1d5db;
+  white-space: pre-wrap;
+  font-family: monospace;
+}

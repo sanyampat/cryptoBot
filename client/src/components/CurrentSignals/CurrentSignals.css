@@ -1,0 +1,95 @@
+.signal-card {
+  background-color: #111827;
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.signals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.signal-box {
+  background-color: #1f2937;
+  padding: 16px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.signal-box:hover {
+  background-color: #2c3442;
+}
+
+.signal-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.signal-detail {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.trigger {
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+.label {
+  color: #9ca3af;
+  margin-right: 0.5rem;
+}
+
+/* Action Badges */
+.action {
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.action.buy {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.action.sell {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.action.hold {
+  background-color: rgba(234, 179, 8, 0.1);
+  color: #eab308;
+}
+
+/* Confidence Colors */
+.confidence {
+  font-size: 0.9rem;
+}
+
+.confidence.high {
+  color: #22c55e;
+}
+
+.confidence.medium {
+  color: #eab308;
+}
+
+.confidence.low {
+  color: #ef4444;
+}

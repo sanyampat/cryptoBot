@@ -1,0 +1,68 @@
+.dashboard-layout {
+  min-height: 100vh;
+  background-color: #0f172a;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.dashboard-title-area {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.dashboard-subtitle {
+  font-size: 1rem;
+  color: #9ca3af;
+}
+
+/* Main flex layout */
+.dashboard-flex {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* Columns */
+.dashboard-left,
+.dashboard-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Right column (optional) */
+.dashboard-right {
+  max-width: 400px;
+}
+
+/* Responsive (stack on mobile) */
+@media (max-width: 1024px) {
+  .dashboard-flex {
+    flex-direction: column;
+  }
+
+  .dashboard-right {
+    max-width: 100%;
+  }
+}
+
+.dashboard-card-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #111827;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 32px;
+}

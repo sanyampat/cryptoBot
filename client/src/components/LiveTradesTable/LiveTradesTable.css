@@ -1,0 +1,82 @@
+.live-trades-card {
+  background-color: #111827; /* dark gray */
+  border: 1px solid #1f2937; /* slightly lighter */
+  border-radius: 8px;
+  padding: 20px;
+  color: #fff;
+  margin-bottom: 24px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.live-trades-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.live-trades-table-wrapper {
+  overflow-x: auto;
+}
+
+.live-trades-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 700px;
+}
+
+.live-trades-table th,
+.live-trades-table td {
+  padding: 10px 12px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.live-trades-table th {
+  background-color: #1f2937;
+  color: #9ca3af;
+  font-weight: 600;
+  border-bottom: 1px solid #374151;
+}
+
+.live-trades-table td {
+  border-bottom: 1px solid #2d3748;
+  color: #e5e7eb;
+}
+
+.live-trades-table tr:hover {
+  background-color: #2a2a2a;
+}
+
+/* Color Utilities */
+.text-green {
+  color: #22c55e; /* green-500 */
+  font-weight: bold;
+}
+
+.text-red {
+  color: #ef4444; /* red-500 */
+  font-weight: bold;
+}
+
+.text-yellow {
+  color: #eab308; /* yellow-500 */
+  font-weight: bold;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.truncate {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
