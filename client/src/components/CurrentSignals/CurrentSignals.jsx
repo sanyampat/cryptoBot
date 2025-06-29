@@ -1,33 +1,20 @@
-import React from 'react';
-import './CurrentSignals.css'; // Link to your CSS file
+import React, { useEffect, useState } from 'react';
+import './CurrentSignals.css';
 
 const CurrentSignals = () => {
-  const signals = [
-    {
-      asset: 'INFY',
-      action: 'BUY',
-      confidence: 'High',
-      trigger: 'Golden cross formation + sector rotation'
-    },
-    {
-      asset: 'ICICI BANK',
-      action: 'SELL',
-      confidence: 'Medium',
-      trigger: 'Overbought RSI + profit booking'
-    },
-    {
-      asset: 'WIPRO',
-      action: 'BUY',
-      confidence: 'Medium',
-      trigger: 'Earnings surprise expected'
-    },
-    {
-      asset: 'AXIS BANK',
-      action: 'HOLD',
-      confidence: 'Low',
-      trigger: 'Mixed technical signals'
-    }
-  ];
+  const [signals, setSignals] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5002/api/live-signals")
+      .then(res => res.json())
+      .then(data => {
+        const topFive = data.slice(0, 5);
+        setSignals(topFive);
+      })
+      .catch(err => {
+        console.error("Error fetching signals:", err);
+      });
+  }, []);
 
   const getActionClass = (action) => {
     switch (action) {
@@ -51,21 +38,25 @@ const CurrentSignals = () => {
     <div className="card signal-card">
       <h2 className="card-title">Current Signals</h2>
       <div className="signals-list">
-        {signals.map((signal, index) => (
-          <div className="signal-box" key={index}>
-            <div className="signal-header">
-              <span className="asset">{signal.asset}</span>
-              <span className={getActionClass(signal.action)}>{signal.action}</span>
+        {signals.length === 0 ? (
+          <p>Loading or no signals available.</p>
+        ) : (
+          signals.map((signal, index) => (
+            <div className="signal-box" key={index}>
+              <div className="signal-header">
+                <span className="asset">{signal.asset}</span>
+                <span className={getActionClass(signal.action)}>{signal.action}</span>
+              </div>
+              <div className="signal-detail">
+                <span className="label">Confidence:</span>
+                <span className={getConfidenceClass(signal.confidence)}>{signal.confidence}</span>
+              </div>
+              <div className="trigger">
+                <span className="label">Trigger: </span>{signal.trigger}
+              </div>
             </div>
-            <div className="signal-detail">
-              <span className="label">Confidence:</span>
-              <span className={getConfidenceClass(signal.confidence)}>{signal.confidence}</span>
-            </div>
-            <div className="trigger">
-              <span className="label">Trigger: </span>{signal.trigger}
-            </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './PortfolioGraph.css';
 import {
   ResponsiveContainer,
@@ -10,32 +10,56 @@ import {
 } from 'recharts';
 
 const PortfolioGraph = () => {
-  const portfolioData = [
-    { date: '06-17', portfolio: 100000, benchmark: 100000, drawdown: 0 },
-    { date: '06-18', portfolio: 102500, benchmark: 101200, drawdown: -0.5 },
-    { date: '06-19', portfolio: 101800, benchmark: 100800, drawdown: -1.2 },
-    { date: '06-20', portfolio: 105200, benchmark: 102100, drawdown: 0 },
-    { date: '06-21', portfolio: 107800, benchmark: 103500, drawdown: 0 },
-    { date: '06-22', portfolio: 110100, benchmark: 104200, drawdown: 0 },
-    { date: '06-23', portfolio: 112400, benchmark: 105800, drawdown: 0 },
-    { date: '06-24', portfolio: 115600, benchmark: 106500, drawdown: 0 }
-  ];
+  const [portfolioStats, setPortfolioStats] = useState([]);
+  const [metrics, setMetrics] = useState([]);
+  const [graphData, setGraphData] = useState([]);
 
-  const performanceMetrics = [
-    { label: 'Total Return', value: '+15.6%', color: 'green' },
-    { label: 'Benchmark Return', value: '+6.5%', color: 'blue' },
-    { label: 'Alpha', value: '+9.1%', color: 'purple' },
-    { label: 'Max Drawdown', value: '-1.2%', color: 'red' },
-    { label: 'Sharpe Ratio', value: '2.34', color: 'goldenrod' },
-    { label: 'Volatility', value: '12.8%', color: 'orange' }
-  ];
+  useEffect(() => {
+    fetchPortfolioData();
+  }, []);
 
-  const portfolioStats = [
-    { label: 'Current Value', value: '₹115,600', change: '+15.6%', positive: true },
-    { label: 'Daily P&L', value: '+₹3,200', change: '+2.8%', positive: true },
-    { label: 'Active Positions', value: '8', change: '+2', positive: true },
-    { label: 'Cash Available', value: '₹25,400', change: '-5.2%', positive: false }
-  ];
+  const fetchPortfolioData = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/api/portfolio-stats');
+      const data = await res.json();
+
+      // Use fallback values with || and ternaries
+      const currentValue = data.currentValue ?? 0;
+      const returnPercent = data.returnPercent ?? 0;
+      const dailyPL = data.dailyPL ?? 0;
+      const dailyChangePercent = data.dailyChangePercent ?? 0;
+      const positions = data.positions ?? 0;
+      const positionsChange = data.positionsChange ?? 0;
+      const cash = data.cash ?? 0;
+      const cashChangePercent = data.cashChangePercent ?? 0;
+
+      const benchmarkReturn = data.benchmarkReturn ?? 0;
+      const alpha = data.alpha ?? 0;
+      const sharpeRatio = data.sharpeRatio ?? "0.00";
+      const maxDrawdown = data.maxDrawdown ?? 0;
+      const volatility = data.volatility ?? 0;
+
+      setPortfolioStats([
+        { label: 'Current Value', value: `₹${currentValue}`, change: `${returnPercent}%`, positive: returnPercent >= 0 },
+        { label: 'Daily P&L', value: `₹${dailyPL}`, change: `${dailyChangePercent}%`, positive: dailyChangePercent >= 0 },
+        { label: 'Active Positions', value: `${positions}`, change: `+${positionsChange}`, positive: true },
+        { label: 'Cash Available', value: `₹${cash}`, change: `${cashChangePercent}%`, positive: cashChangePercent >= 0 }
+      ]);
+
+      setMetrics([
+        { label: 'Total Return', value: `${returnPercent}%`, color: 'green' },
+        { label: 'Benchmark Return', value: `${benchmarkReturn}%`, color: 'blue' },
+        { label: 'Alpha', value: `${alpha}%`, color: 'purple' },
+        { label: 'Max Drawdown', value: `${maxDrawdown}%`, color: 'red' },
+        { label: 'Sharpe Ratio', value: sharpeRatio, color: 'goldenrod' },
+        { label: 'Volatility', value: `${volatility}%`, color: 'orange' }
+      ]);
+
+      setGraphData(Array.isArray(data.graph) ? data.graph : []);
+    } catch (err) {
+      console.error('Error loading portfolio data:', err);
+    }
+  };
 
   return (
     <div className="portfolio-card">
@@ -58,7 +82,7 @@ const PortfolioGraph = () => {
 
       <div className="portfolio-chart-container">
         <ResponsiveContainer width="100%" height={400}>
-          <AreaChart data={portfolioData} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
+          <AreaChart data={graphData} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
             <defs>
               <linearGradient id="portfolioGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#4ade80" stopOpacity={0.3} />
@@ -84,7 +108,7 @@ const PortfolioGraph = () => {
       </div>
 
       <div className="performance-metrics">
-        {performanceMetrics.map((metric, i) => (
+        {metrics.map((metric, i) => (
           <div className="metric" key={i}>
             <div className="metric-label">{metric.label}</div>
             <div className="metric-value" style={{ color: metric.color }}>
