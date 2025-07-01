@@ -164,14 +164,32 @@ def run_deepseek(prompt):
 def ask_deepseek_confirmation(symbol, rsi, macd, ema, vol, price, signal):
     prompt = f"""
 The AI predicted a {signal} signal for {symbol}. 
-- RSI: {rsi:.2f} \n- MACD: {macd:.4f} \n- EMA: {ema:.2f} \n- Volume EMA: {vol:.2f} \n- Price: {price:.2f}.
+- RSI: {rsi:.2f} 
+- MACD: {macd:.4f} 
+- EMA: {ema:.2f} 
+- Volume EMA: {vol:.2f} 
+- Price: {price:.2f}.
+
 Should we proceed with {signal}? Reply YES - reason or NO - reason.
 """
-    res = run_deepseek(prompt)
-    if '-' in res:
+    res = run_deepseek(prompt).strip()
+    
+    # Debug log
+    print(f"🧠 DeepSeek raw response:\n{res}")
+    
+    # Try common formats
+    if res.lower().startswith("yes"):
+        reason = res.split(" ", 1)[1] if " " in res else "No reason provided"
+        return "YES", reason.strip()
+    elif res.lower().startswith("no"):
+        reason = res.split(" ", 1)[1] if " " in res else "No reason provided"
+        return "NO", reason.strip()
+    elif '-' in res:
         p = res.split('-', 1)
         return p[0].strip().upper(), p[1].strip()
+    
     return "NO", "Invalid DeepSeek response"
+
 
 # ---------- LIVE LOOP ----------
 def live_mode_loop():
@@ -231,12 +249,66 @@ def track_wallet_performance():
     except Exception as e:
         print(f"⚠️ Failed to track wallet performance: {e}")
 
+# ---------- LIVE LOOP & SCHEDULING ----------
+def main_loop():
+    print(f"\n🔁 Starting main loop at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    try:
+        live_mode_loop()
+        track_wallet_performance()
+    except Exception as e:
+        print(f"⚠️ Critical error in main loop: {e}")
+        # Attempt to save wallet state if something went wrong
+        try:
+            wallet = load_wallet()
+            save_wallet(wallet)
+            print("💾 Emergency wallet save completed")
+        except:
+            print("❌ Failed emergency wallet save!")
+
 # ---------- RUN ----------
 if __name__ == "__main__":
+    print("""
+    ███████╗██╗███╗   ██╗ █████╗ ██╗     ███████╗
+    ██╔════╝██║████╗  ██║██╔══██╗██║     ██╔════╝
+    █████╗  ██║██╔██╗ ██║███████║██║     █████╗  
+    ██╔══╝  ██║██║╚██╗██║██╔══██║██║     ██╔══╝  
+    ██║     ██║██║ ╚████║██║  ██║███████╗███████╗
+    ╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚══════╝
+    """)
     print("🚀 Live Crypto Signal Bot Started...")
-    load_models()
-    live_mode_loop()
-    schedule.every(5).minutes.do(live_mode_loop)
+    print(f"📅 Initialized at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"💰 Initial balance: ${load_wallet()['balance']:.2f}")
+    
+    # Load models first
+    try:
+        load_models()
+        print("✅ Models loaded successfully")
+    except Exception as e:
+        print(f"❌ Failed to load models: {e}")
+        exit(1)
+    
+    # Initial run
+    main_loop()
+    
+    # Schedule regular jobs
+    schedule.every(5).minutes.do(main_loop)
+    schedule.every(1).hour.do(track_wallet_performance)
+    
+    # Main loop
+    print("\n⏳ Entering continuous execution mode...")
     while True:
-        schedule.run_pending()
-        time.sleep(1)
+        try:
+            schedule.run_pending()
+            time.sleep(1)
+        except KeyboardInterrupt:
+            print("\n🛑 Received shutdown signal...")
+            break
+        except Exception as e:
+            print(f"⚠️ Scheduler error: {e}")
+            time.sleep(10)  # Prevent tight loop on errors
+    
+    print("💾 Saving final wallet state...")
+    wallet = load_wallet()
+    save_wallet(wallet)
+    print(f"💰 Final balance: ${wallet['balance']:.2f}")
+    print("👋 Shutdown complete")

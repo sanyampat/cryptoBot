@@ -1,0 +1,20 @@
+[
+  {
+    "timestamp": "2025-06-29 16:15:16",
+    "total_value": 999.71,
+    "balance": 969.76,
+    "holdings_value": 29.95
+  },
+  {
+    "timestamp": "2025-06-29 16:17:36",
+    "total_value": 999.71,
+    "balance": 969.76,
+    "holdings_value": 29.95
+  },
+  {
+    "timestamp": "2025-06-29 16:19:31",
+    "total_value": 999.74,
+    "balance": 999.74,
+    "holdings_value": 0.0
+  }
+]
