@@ -203,7 +203,8 @@ Some things I'd like to improve:
 
 **Sanyam Patawari**
 GitHub: https://github.com/sanyampat
-**Sarvagya Patni
+
+**Sarvagya Patni**
 Github: https://github.com/justbecool5757
 
 
